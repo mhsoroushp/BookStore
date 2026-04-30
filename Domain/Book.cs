@@ -4,7 +4,7 @@ namespace Domain;
 
 public class Book
 {
-    public Guid Id { get; set; }
+    public string Id { get; set; } = Guid.NewGuid().ToString();
     public required string Title { get; set; } = null!;
     public string? Author { get; set; } = null!;
     public decimal? Price { get; set; }

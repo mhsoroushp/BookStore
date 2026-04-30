@@ -19,6 +19,8 @@ builder.Services.AddDbContext<AppDbContext>(opt =>
     opt.UseSqlite(builder.Configuration.GetConnectionString("DefaultConnection"));
 });
 
+builder.Services.AddScoped<DbInitializer>();
+
 builder.Services.AddIdentityApiEndpoints <User>()
     .AddRoles<IdentityRole>()
     .AddEntityFrameworkStores<AppDbContext>();
@@ -40,5 +42,13 @@ app.UseAuthorization();
 
 app.MapControllers();
 app.MapGroup("api").MapIdentityApi<User>();
+
+
+using(var scope = app.Services.CreateScope())
+{
+    var services = scope.ServiceProvider;
+    var dbInitializer = services.GetRequiredService<DbInitializer>();
+    dbInitializer.DataSeed();
+}
 
 app.Run();
