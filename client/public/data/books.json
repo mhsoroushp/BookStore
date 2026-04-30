@@ -1,0 +1,37 @@
+[
+    {
+        "id": "1",
+        "title": "The Midnight Library",
+        "author": "Matt Haig",
+        "price": 16.99,
+        "description": "A novel about life choices and second chances across parallel lives."
+    },
+    {
+        "id": "2",
+        "title": "Atomic Habits",
+        "author": "James Clear",
+        "price": 18.5,
+        "description": "Practical strategies for building good habits and breaking bad ones."
+    },
+    {
+        "id": "3",
+        "title": "Dune",
+        "author": "Frank Herbert",
+        "price": 14.25,
+        "description": "An epic science fiction story of politics, prophecy, and survival."
+    },
+    {
+        "id": "4",
+        "title": "Educated",
+        "author": "Tara Westover",
+        "price": 15.75,
+        "description": "A memoir about family, resilience, and the transformative power of education."
+    },
+    {
+        "id": "5",
+        "title": "The Pragmatic Programmer",
+        "author": "Andrew Hunt and David Thomas",
+        "price": 32.0,
+        "description": "A timeless guide to software craftsmanship and pragmatic thinking."
+    }
+]
