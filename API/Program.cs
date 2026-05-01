@@ -8,6 +8,8 @@ using Application.Interfaces.Repositories;
 using Application.Interfaces.Services;
 using Persistence.Repositories;
 using Application.Services.Books;
+using FluentValidation;
+using Application.Validators;
 
 var builder = WebApplication.CreateBuilder(args);
 
@@ -26,6 +28,7 @@ builder.Services.AddDbContext<AppDbContext>(opt =>
 builder.Services.AddScoped<DbInitializer>();
 builder.Services.AddScoped<IBookRepository, BookRepository>();
 builder.Services.AddScoped<IBookService, BookService>();
+builder.Services.AddValidatorsFromAssemblyContaining<BookDtoValidator>();
 
 builder.Services.AddIdentityApiEndpoints <User>()
     .AddRoles<IdentityRole>()

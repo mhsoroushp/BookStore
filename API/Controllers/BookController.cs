@@ -1,6 +1,6 @@
+using Application.Core;
 using Application.DTOs;
 using Application.Interfaces.Services;
-using Domain;
 using Microsoft.AspNetCore.Mvc;
 
 namespace API.Controllers;
@@ -10,37 +10,38 @@ public class BookController(IBookService bookService) : BaseApiController
     [HttpGet]
     public async Task<ActionResult<List<BookDto>>> GetBooks()
     {
-        var books = await bookService.GetAllAsync();
-        return Ok(books);
+        var result = await bookService.GetAllAsync();
+        return HandleResult(result);
     }
 
     [HttpGet("{id}")]
     public async Task<ActionResult<BookDto>> GetBookById(string id)
     {
-        var book = await bookService.GetByIdAsync(id);
+        var result = await bookService.GetByIdAsync(id);
+        return HandleResult(result);
+    }
 
-        if (book is null) return NotFound();
+    [HttpPost]
+    public async Task<ActionResult<BookDto>> CreateBook(BookDto dto)
+    {
+        var result = await bookService.CreateAsync(dto);
 
-        return Ok(book);
+        if (!result.IsSuccess) return StatusCode(result.Code, result.ValidationErrors ?? (object?)result.Error);
+
+        return CreatedAtAction(nameof(GetBookById), new { id = result.Value!.Id }, result.Value);
     }
 
     [HttpDelete("{id}")]
     public async Task<ActionResult> DeleteBookById(string id)
     {
-        var deleted = await bookService.DeleteAsync(id);
-
-        if (!deleted) return NotFound();
-
-        return NoContent();
+        var result = await bookService.DeleteAsync(id);
+        return HandleResult(result);
     }
 
     [HttpPut("{id}")]
     public async Task<ActionResult> ModifyBook(string id, BookDto dto)
     {
-        var updated = await bookService.UpdateAsync(id, dto);
-
-        if (!updated) return NotFound();
-
-        return NoContent();
+        var result = await bookService.UpdateAsync(id, dto);
+        return HandleResult(result);
     }
 }

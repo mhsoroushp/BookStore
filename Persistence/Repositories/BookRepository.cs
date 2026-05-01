@@ -10,6 +10,13 @@ public class BookRepository(AppDbContext context) : IBookRepository
 
     public async Task<Book?> GetByIdAsync(string id) => await context.Books.FindAsync(id);
 
+    public async Task<Book> CreateAsync(Book book)
+    {
+        context.Books.Add(book);
+        await context.SaveChangesAsync();
+        return book;
+    }
+
     public async Task DeleteAsync(Book book)
     {
         context.Books.Remove(book);
