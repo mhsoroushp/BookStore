@@ -4,6 +4,10 @@ using Persistence;
 using Domain;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc.Authorization;
+using Application.Interfaces.Repositories;
+using Application.Interfaces.Services;
+using Persistence.Repositories;
+using Application.Services.Books;
 
 var builder = WebApplication.CreateBuilder(args);
 
@@ -20,6 +24,8 @@ builder.Services.AddDbContext<AppDbContext>(opt =>
 });
 
 builder.Services.AddScoped<DbInitializer>();
+builder.Services.AddScoped<IBookRepository, BookRepository>();
+builder.Services.AddScoped<IBookService, BookService>();
 
 builder.Services.AddIdentityApiEndpoints <User>()
     .AddRoles<IdentityRole>()
