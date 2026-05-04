@@ -22,13 +22,10 @@ public class BookController(IBookService bookService) : BaseApiController
     }
 
     [HttpPost]
-    public async Task<ActionResult<BookDto>> CreateBook(BookDto dto)
+    public async Task<ActionResult<string>> CreateBook(BookDto dto)
     {
         var result = await bookService.CreateAsync(dto);
-
-        if (!result.IsSuccess) return StatusCode(result.Code, result.ValidationErrors ?? (object?)result.Error);
-
-        return CreatedAtAction(nameof(GetBookById), new { id = result.Value!.Id }, result.Value);
+        return HandleResult(result);
     }
 
     [HttpDelete("{id}")]

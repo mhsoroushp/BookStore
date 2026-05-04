@@ -39,18 +39,15 @@ public class BookService(IBookRepository bookRepository, IValidator<BookDto> val
         });
     }
 
-    public async Task<Result<BookDto>> CreateAsync(BookDto dto)
+    public async Task<Result<string>> CreateAsync(BookDto dto)
     {
         var validation = await validator.ValidateAsync(dto);
         if (!validation.IsValid)
         {
             var errors = validation.Errors
                 .GroupBy(e => e.PropertyName)
-                .ToDictionary(
-                    g => g.Key,
-                    g => g.Select(e => e.ErrorMessage).ToArray()
-                );
-            return Result<BookDto>.ValidationFailure(errors);
+                .ToDictionary(g => g.Key, g => g.Select(e => e.ErrorMessage).ToArray());
+            return Result<string>.ValidationFailure(errors);
         }
 
         var book = new Book
@@ -61,16 +58,11 @@ public class BookService(IBookRepository bookRepository, IValidator<BookDto> val
             Description = dto.Description
         };
 
-        var created = await bookRepository.CreateAsync(book);
+        var createdBook = await bookRepository.CreateAsync(book);
 
-        return Result<BookDto>.Success(new BookDto
-        {
-            Id = created.Id,
-            Title = created.Title,
-            Author = created.Author,
-            Price = created.Price,
-            Description = created.Description
-        });
+        if (createdBook is null) return Result<string>.Failure("Failed to create book", 400);
+
+        return Result<string>.Success(createdBook.Id);
     }
 
     public async Task<Result<bool>> DeleteAsync(string id)
@@ -79,27 +71,24 @@ public class BookService(IBookRepository bookRepository, IValidator<BookDto> val
         if (book is null)
             return Result<bool>.Failure("Book not found", 404);
 
-        await bookRepository.DeleteAsync(book);
-        return Result<bool>.Success();
+        var isDeleted = await bookRepository.DeleteAsync(book);
+        return Result<bool>.Success(isDeleted);
     }
 
-    public async Task<Result<bool>> UpdateAsync(string id, BookDto dto)
+    public async Task<Result<BookDto>> UpdateAsync(string id, BookDto dto)
     {
         var validation = await validator.ValidateAsync(dto);
         if (!validation.IsValid)
         {
             var errors = validation.Errors
                 .GroupBy(e => e.PropertyName)
-                .ToDictionary(
-                    g => g.Key,
-                    g => g.Select(e => e.ErrorMessage).ToArray()
-                );
-            return Result<bool>.ValidationFailure(errors);
+                .ToDictionary(g => g.Key, g => g.Select(e => e.ErrorMessage).ToArray());
+            return Result<BookDto>.ValidationFailure(errors);
         }
 
         var book = await bookRepository.GetByIdAsync(id);
         if (book is null)
-            return Result<bool>.Failure("Book not found", 404);
+            return Result<BookDto>.Failure("Book not found", 404);
 
         book.Title = dto.Title;
         book.Author = dto.Author;
@@ -107,6 +96,16 @@ public class BookService(IBookRepository bookRepository, IValidator<BookDto> val
         book.Description = dto.Description;
 
         await bookRepository.UpdateAsync(book);
-        return Result<bool>.Success();
+
+        var updatedDto = new BookDto
+        {
+            Id = book.Id,
+            Title = book.Title,
+            Author = book.Author,
+            Price = book.Price,
+            Description = book.Description
+        };
+
+        return Result<BookDto>.Success(updatedDto);
     }
 }

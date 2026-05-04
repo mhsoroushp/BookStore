@@ -8,7 +8,7 @@ public class BookDtoValidator : AbstractValidator<BookDto>
     public BookDtoValidator()
     {
         RuleFor(x => x.Title)
-            .NotEmpty().WithMessage("Title is required")
+            .NotEmpty().WithMessage("Title is requiredddddd")
             .MaximumLength(100).WithMessage("Title must not exceed 100 characters");
 
         RuleFor(x => x.Author)

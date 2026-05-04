@@ -7,6 +7,6 @@ public interface IBookRepository
     Task<List<Book>> GetAllAsync();
     Task<Book?> GetByIdAsync(string id);
     Task<Book> CreateAsync(Book book);
-    Task DeleteAsync(Book book);
-    Task UpdateAsync(Book book);
+    Task<bool> DeleteAsync(Book book);
+    Task<Book> UpdateAsync(Book book);
 }

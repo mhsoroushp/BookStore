@@ -11,19 +11,7 @@ public class Result<T>
     public int Code { get; set; }
     public Dictionary<string, string[]>? ValidationErrors { get; set; }
 
-    public static Result<T> Success(T value) => new()
-    {
-        IsSuccess = true,
-        Value = value,
-        Code = 200
-    };
-
-    public static Result<T> Success() => new()
-    {
-        IsSuccess = true,
-        Code = 200
-    };
-
+    public static Result<T> Success(T value) => new() { IsSuccess = true, Value = value};
     public static Result<T> Failure(string error, int code) => new()
     {
         IsSuccess = false, 
@@ -34,7 +22,7 @@ public class Result<T>
     public static Result<T> ValidationFailure(Dictionary<string, string[]> errors) => new()
     {
         IsSuccess = false,
-        Error = "Validation failed",
+        Error = "Validation error",
         Code = 400,
         ValidationErrors = errors
     };

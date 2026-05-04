@@ -17,15 +17,17 @@ public class BookRepository(AppDbContext context) : IBookRepository
         return book;
     }
 
-    public async Task DeleteAsync(Book book)
+    public async Task<bool> DeleteAsync(Book book)
     {
         context.Books.Remove(book);
-        await context.SaveChangesAsync();
+        var result = await context.SaveChangesAsync();
+        return result > 0;
     }
 
-    public async Task UpdateAsync(Book book)
+    public async Task<Book> UpdateAsync(Book book)
     {
         context.Books.Update(book);
         await context.SaveChangesAsync();
+        return book;
     }
 }
