@@ -1,7 +1,6 @@
 import { StrictMode } from 'react'
 import { createRoot } from 'react-dom/client'
 import './app/layout/styles.css'
-import App from './app/layout/App.tsx'
 
 import {
   QueryClient,
@@ -19,7 +18,6 @@ createRoot(document.getElementById('root')!).render(
     <QueryClientProvider client={queryClient}>
       <ReactQueryDevtools />
       <RouterProvider router={router} />
-      <App />
     </QueryClientProvider>
   </StrictMode>,
 )

@@ -41,6 +41,14 @@ builder.Services.AddCors();
 var app = builder.Build();
 
 app.UseMiddleware<ExceptionMiddleware>();
+
+app.UseCors(x => x
+    .AllowAnyHeader()
+    .AllowAnyMethod()
+    .AllowCredentials()
+    .WithOrigins("http://localhost:3001", "https://localhost:3001"));
+
+
 // Configure the HTTP request pipeline.
 if (app.Environment.IsDevelopment())
 {
