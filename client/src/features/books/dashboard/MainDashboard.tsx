@@ -1,7 +1,7 @@
-import {Box, Grid} from "@mui/material"
-import BookList from "./bookList";
-import BookDetails from "../details/BookDetails";
-import BookForm from "../form/bookForm";
+import {Grid, Typography} from "@mui/material"
+// import BookList from "./bookList";
+// import BookDetails from "../details/BookDetails";
+// import BookForm from "../form/bookForm";
 
 // type Props = {
 //     books : Book[]
@@ -18,10 +18,13 @@ export default function MainDashboard() {
     return (
         <Grid container spacing={3}>
             <Grid size={8}>
-                <ActivityList />
+                <Typography variant="h3" gutterBottom>
+                    Books
+                </Typography>
+                {/* <BookList /> */}
             </Grid>
             <Grid size={4}>
-                <ActivityFilters />
+                {/* <BookFilters /> */}
             </Grid>
         </Grid>
     )

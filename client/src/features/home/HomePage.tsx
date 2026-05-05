@@ -27,9 +27,9 @@ export default function HomePage() {
         Welcome to reactivities
       </Typography>
       <Button 
-        component={Link} to='/activities' size='large' variant="contained" 
+        component={Link} to='/books' size='large' variant="contained" 
         sx={{height: 80, borderRadius: 4, fontSize: '1.5rem'}}>
-        Take me to the activities!
+        Take me to the books!
       </Button>
     </Paper>
   )
