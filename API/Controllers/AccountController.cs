@@ -36,6 +36,32 @@ public class AccountController(SignInManager<User> _signInManager) : BaseApiCont
     {
         return Ok(new { message = "Authorized endpoint works", user = User.Identity?.Name });
     }
+
+    [Authorize]
+    [HttpPost("logout")]
+    public async Task<ActionResult> Logout()
+    {
+        await _signInManager.SignOutAsync();
+        return NoContent();
+    }
+
+    [AllowAnonymous]
+    [HttpGet("user-info")]
+    public async Task<ActionResult> GetUserInfo()
+    {
+        if (User.Identity?.IsAuthenticated == false) return NoContent();
+        
+        var user = await _signInManager.UserManager.GetUserAsync(User);
+
+        if (user == null) return Unauthorized();
+
+        return Ok(new
+        {
+            user.Id,
+            user.DisplayName,
+            user.UserName,
+        });
+    }
 }
 
 

@@ -5,3 +5,9 @@ type Book = {
   price: number;
   description?: string;
 };
+
+type User = {
+    id: string
+    userName: string
+    displayName: string
+}
