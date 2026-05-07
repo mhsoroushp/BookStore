@@ -1,7 +1,6 @@
 import { Box, Button, Paper, Typography } from "@mui/material";
-import { Link, LockOpen } from "@mui/icons-material";
-
-
+import { LockOpen } from "@mui/icons-material";
+import { Link } from "react-router";
 import { useForm } from "react-hook-form"
 import { useAccount } from "../../lib/hooks/useAccount";
 import { useLocation, useNavigate } from "react-router";
@@ -46,8 +45,8 @@ export default function LoginForm() {
                 <LockOpen fontSize='large' />
                 <Typography variant="h4">Sign in</Typography>
             </Box>
-            <input {...register("email", { required: true, maxLength: 20 })} />
-            <input type="password" {...register("password", { required: true, maxLength: 20 })} />
+            <input placeholder="Email" {...register("email", { required: true, maxLength: 20 })} />
+            <input placeholder="Password" type="password" {...register("password", { required: true, maxLength: 20 })} />
             <Button
                 type='submit'
                 variant="contained"
