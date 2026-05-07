@@ -14,7 +14,7 @@ import {Grid, Typography} from "@mui/material"
 //     closeForm: () => void
 // }
 
-export default function MainDashboard() {
+export default function BookDashboard() {
     return (
         <Grid container spacing={3}>
             <Grid size={8}>

@@ -1,4 +1,5 @@
 import { useAccount } from "../../lib/hooks/useAccount";
+import { Button } from "@mui/material";
 
 export default function UserMenu() {
     const { currentUser, isUserLoading, logout } = useAccount();
@@ -7,8 +8,8 @@ export default function UserMenu() {
 
     return (
         <div>
-            {currentUser?.displayName || "User menu 1"}
-            <button onClick={() => logout.mutate()}>Logout</button>
+            {currentUser?.displayName}
+            <Button onClick={() => logout.mutate()} sx={{ color: 'inherit' }}>Logout</Button>
         </div>
     );
 }

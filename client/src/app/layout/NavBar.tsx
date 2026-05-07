@@ -1,9 +1,9 @@
 import { Group } from "@mui/icons-material";
 import { Box, AppBar, Toolbar, Typography, Container, Button } from "@mui/material"; 
 import { NavLink } from "react-router";
-import MenuItemLink from "../shared/components/MenuItemLink";
 import UserMenu from "./UserMenu";
 import { useAccount } from "../../lib/hooks/useAccount";
+import MenuItemLink from "../shared/components/MenuItemLink";
 
 export default function NavBar() {
     const {currentUser} = useAccount();
@@ -15,20 +15,17 @@ export default function NavBar() {
                         <Box>
                             <Button component={NavLink} to='/' sx={{ display: 'flex', gap: 2, color: 'inherit' }}>
                                 <Group fontSize='large' />
-                                <Typography variant="h4" sx={{fontWeight:'bold'}}>Reactivities</Typography>
+                                <Typography variant="h4" sx={{fontWeight:'bold'}}>Best Books</Typography>
                             </Button>
                         </Box>
                         <Box sx={{display: 'flex'}}>
-                            <MenuItemLink  to='/activities'>
-                                Activities
+                            <MenuItemLink  to='/books'>
+                                Books
                             </MenuItemLink>
-                            <MenuItemLink to='/createActivity'>
-                                Create Activity
-                            </MenuItemLink>
+                            {/* <MenuItemLink to='/home materials'>
+                                Home Materials
+                            </MenuItemLink> */}
                         </Box>
-                        {/* <Button sx={{ color: 'inherit' }}>
-                            User menu
-                        </Button> */}
                         <Box>
                             {
                                 currentUser ? (<UserMenu />) : (
