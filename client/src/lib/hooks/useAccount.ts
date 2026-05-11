@@ -1,21 +1,28 @@
 import { useMutation, useQuery, useQueryClient } from "@tanstack/react-query";
-import axios from "axios";
 import { useNavigate } from "react-router";
 import agent from "../api/agent";
 import type { RegisterSchema } from "../schemas/registerSchema";
+import { useStore } from "./useStore";
 
 export const useAccount = () => {
     const queryClient = useQueryClient();
     const navigate = useNavigate();
+    const { accountStore } = useStore();
 
     const userLogin = useMutation({
         mutationFn: async (creds: {email: string, password: string}) => {
             await agent.post('/login?useCookies=true', creds);
         }, 
         onSuccess: async () => {
-            queryClient.invalidateQueries(
-                {queryKey: ['user']}
-            );
+            const user = await queryClient.fetchQuery({
+                queryKey: ['user'],
+                queryFn: async () => {
+                    const response = await agent.get<User>('/account/user-info');
+                    return response.data;
+                }
+            });
+            accountStore.setCurrentUser(user);
+            queryClient.invalidateQueries({queryKey: ['user']});
             await navigate('/books');
         }   
     });
@@ -34,7 +41,7 @@ export const useAccount = () => {
         queryFn: async () => {
             const response = await agent.get<User>('/account/user-info');
             return response.data;
-        } 
+        }
     });
 
     const logout = useMutation({
@@ -42,6 +49,7 @@ export const useAccount = () => {
             await agent.post('/account/logout');
         },
         onSuccess: () => {
+            accountStore.clearCurrentUser();
             queryClient.invalidateQueries({ queryKey: ['user'] });
             navigate('/login');
         }
