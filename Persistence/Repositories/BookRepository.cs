@@ -30,4 +30,20 @@ public class BookRepository(AppDbContext context) : IBookRepository
         await context.SaveChangesAsync();
         return book;
     }
+
+    public async Task<(List<Book> books, string? nextCursor, bool hasNextPage)> GetPaginatedAsync(string? cursor, int take = 3)
+    {
+        var query = context.Books
+                    .Where(b => string.Compare(b.Id, cursor ?? string.Empty) > 0)
+                    .OrderBy(b => b.Id);
+
+        var books = await query.Take(take + 1).ToListAsync();
+        bool hasNextPage = books.Count > take;
+        if (hasNextPage)            
+            books = books.Take(take).ToList();
+
+        string? nextCursor = hasNextPage ? books.Last().Id : null;
+    
+        return (books, nextCursor, hasNextPage);
+    }
 }

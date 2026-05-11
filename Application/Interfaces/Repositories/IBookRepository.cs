@@ -9,4 +9,5 @@ public interface IBookRepository
     Task<Book> CreateAsync(Book book);
     Task<bool> DeleteAsync(Book book);
     Task<Book> UpdateAsync(Book book);
+    Task<(List<Book> books, string? nextCursor, bool hasNextPage)> GetPaginatedAsync(string? cursor, int take = 3);
 }

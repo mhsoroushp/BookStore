@@ -1,14 +1,13 @@
 import { Group } from "@mui/icons-material";
-import { Box, AppBar, Toolbar, Typography, Container, Button } from "@mui/material"; 
+import { Box, AppBar, Toolbar, Typography, Container, Button, CircularProgress } from "@mui/material"; 
 import { NavLink } from "react-router";
 import UserMenu from "./UserMenu";
-// import { useAccount } from "../../lib/hooks/useAccount";
+import { Observer } from "mobx-react-lite";
 import MenuItemLink from "../shared/components/MenuItemLink";
 import { useStore } from "../../lib/hooks/useStore";
 
 export default function NavBar() {
-    const { accountStore } = useStore(); 
-    // const {currentUser} = useAccount();
+    const { accountStore, uiStore } = useStore(); 
     return (
         <Box sx={{ flexGrow: 1 }}>
             <AppBar position="static" sx={{ backgroundImage: 'linear-gradient(135deg, #182a73 0%, #218aae 69%, #20a7ac 89%)' }}>
@@ -20,13 +19,26 @@ export default function NavBar() {
                                 <Typography variant="h4" sx={{fontWeight:'bold'}}>Best Books</Typography>
                             </Button>
                         </Box>
+                        <Observer>
+                            {() => 
+                                uiStore.isLoading ? (
+                                <Box sx={{ display: 'flex', alignItems: 'center', justifyContent: 'center' }}>
+                                    <CircularProgress
+                                        size={20}
+                                        thickness={7}
+                                        sx={{
+                                            color: 'white',
+                                            mr: 2,
+                                        }}
+                                    />
+                                </Box>
+                                ) : null
+                            }
+                        </Observer>
                         <Box sx={{display: 'flex'}}>
                             <MenuItemLink  to='/books'>
                                 Books
                             </MenuItemLink>
-                            {/* <MenuItemLink to='/home materials'>
-                                Home Materials
-                            </MenuItemLink> */}
                         </Box>
                         <Box>
                             {

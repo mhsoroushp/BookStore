@@ -11,3 +11,11 @@ type User = {
     userName: string
     displayName: string
 }
+
+type PaginatedBooks = {
+    items: Book[];
+    nextCursor: string | null;
+    previousCursor: string | null;
+    hasNextPage: boolean;
+    hasPreviousPage: boolean;
+}

@@ -10,4 +10,5 @@ public interface IBookService
     Task<Result<string>> CreateAsync(BookDto dto);
     Task<Result<bool>> DeleteAsync(string id);
     Task<Result<BookDto>> UpdateAsync(string id, BookDto dto);
+    Task<Result<PaginatedBooksDto<BookDto>>> GetPaginatedAsync(string? cursor, int take = 3);
 }

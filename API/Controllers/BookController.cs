@@ -14,6 +14,13 @@ public class BookController(IBookService bookService) : BaseApiController
         return HandleResult(result);
     }
 
+    [HttpGet("paginated")]
+    public async Task<ActionResult<PaginatedBooksDto<BookDto>>> GetBooksPaginated([FromQuery] string? cursor, [FromQuery] int take = 3)
+    {
+        var result = await bookService.GetPaginatedAsync(cursor, take);
+        return HandleResult(result);
+    }
+
     [HttpGet("{id}")]
     public async Task<ActionResult<BookDto>> GetBookById(string id)
     {

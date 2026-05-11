@@ -27,16 +27,6 @@ export default function AuthNavBar() {
                                 ) : null
                             }
                         </Observer>
-                        {/* <Box sx={{ display: 'flex', alignItems: 'center', justifyContent: 'center' }}>
-                            <CircularProgress
-                                        size={20}
-                                        thickness={7}
-                                        sx={{
-                                            color: 'white',
-                                            mr: 2,
-                                        }}
-                            />
-                        </Box> */}
                         <Box sx={{ display: 'flex', alignItems: 'center' }}>
                             <img src="/images/books/book_logo.png" alt="Logo" style={{ height: '40px', marginRight: '16px', borderRadius: '5px' }} />
                             <Typography variant="h6" sx={{ color: 'white' }}>

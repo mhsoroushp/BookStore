@@ -108,4 +108,28 @@ public class BookService(IBookRepository bookRepository, IValidator<BookDto> val
 
         return Result<BookDto>.Success(updatedDto);
     }
+
+    public async Task<Result<PaginatedBooksDto<BookDto>>> GetPaginatedAsync(string? cursor, int take = 3)
+    {
+        var (books, nextCursor, hasNextPage) = await bookRepository.GetPaginatedAsync(cursor, take);
+
+        var dtos = books.Select(b => new BookDto
+        {
+            Id = b.Id,
+            Title = b.Title,
+            Author = b.Author,
+            Price = b.Price,
+            Description = b.Description
+        }).ToList();
+
+        var result = new PaginatedBooksDto<BookDto>
+        {
+            Items = dtos,
+            NextCursor = nextCursor,
+            HasNextPage = hasNextPage,
+            HasPreviousPage = !string.IsNullOrEmpty(cursor)
+        };
+
+        return Result<PaginatedBooksDto<BookDto>>.Success(result);
+    }
 }
