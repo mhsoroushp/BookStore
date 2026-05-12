@@ -1,6 +1,7 @@
 using Application.Core;
 using Application.DTOs;
 using Application.Interfaces.Services;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 
 namespace API.Controllers;
@@ -14,6 +15,7 @@ public class BookController(IBookService bookService) : BaseApiController
         return HandleResult(result);
     }
 
+    [AllowAnonymous]
     [HttpGet("paginated")]
     public async Task<ActionResult<PaginatedBooksDto<BookDto>>> GetBooksPaginated([FromQuery] string? cursor, [FromQuery] int take = 3)
     {
