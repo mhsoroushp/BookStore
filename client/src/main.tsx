@@ -1,6 +1,7 @@
 import { StrictMode } from 'react'
 import { createRoot } from 'react-dom/client'
 import './app/layout/styles.css'
+import { ToastContainer } from 'react-toastify';
 
 import {
   QueryClient,
@@ -19,6 +20,7 @@ createRoot(document.getElementById('root')!).render(
     <StoreContext.Provider value={store}>
     <QueryClientProvider client={queryClient}>
       <ReactQueryDevtools />
+      <ToastContainer position='bottom-right' hideProgressBar theme='colored' />
       <RouterProvider router={router} />
     </QueryClientProvider>
     </StoreContext.Provider>

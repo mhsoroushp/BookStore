@@ -1,6 +1,7 @@
 
 import axios from "axios";
 import { store } from "../stores/store";
+import { toast } from 'react-toastify';
 
 const agent = axios.create({
     baseURL: import.meta.env.VITE_API_URL,
@@ -12,18 +13,43 @@ agent.interceptors.request.use(config => {
     return config;
 });
 
-agent.interceptors.response.use(async response => {
-    try {
+agent.interceptors.response.use(
+    async response => {
         await new Promise(resolve => setTimeout(resolve, 1000));
         store.uiStore.isIdle();
         return response;
-    } catch (error) {
+    },
+     async error => {
         await new Promise(resolve => setTimeout(resolve, 1000));
-        console.log(error);
-        store.uiStore.isIdle();
+        const {data, status} = error.response;
+        switch (status) {
+            case 400:
+                if (data.errors) {
+                    const modalStateErrors = [];
+                    for (const key in data.errors) {
+                        if (data.errors[key]) {
+                            modalStateErrors.push(data.errors[key])
+                        }
+                    }
+                    throw modalStateErrors.flat();
+                } else {
+                    toast.error(data);
+                    toast.error('Bad Request');
+                }
+                break;
+            case 401:
+                toast.error('Unauthorized');
+                break;
+            case 404:
+                console.error('Not Found');
+                break;
+            case 500:
+                console.error('Server Error:', data);   
+                break;
+        }
         return Promise.reject(error);
     }
-})
+);
 
 export default agent;
 
