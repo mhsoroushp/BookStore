@@ -15,7 +15,8 @@ export const useBooks =(cursor: string | null= null, booksPerPage: number) => {
             );
             return response.data;
         },
-        placeholderData: keepPreviousData
+        placeholderData: keepPreviousData,
+        retry: false
     });
 
     return {
