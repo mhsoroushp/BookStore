@@ -40,8 +40,11 @@ export const useAccount = () => {
         queryKey: ['user'],
         queryFn: async () => {
             const response = await agent.get<User>('/account/user-info');
+            accountStore.setCurrentUser(response.data);
             return response.data;
-        }
+        },
+        enabled: !accountStore.currentUser,
+        retry: false, 
     });
 
     const logout = useMutation({
