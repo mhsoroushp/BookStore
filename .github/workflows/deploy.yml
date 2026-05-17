@@ -39,5 +39,5 @@ jobs:
           az webapp config container set \
             --name $APP_SERVICE_NAME \
             --resource-group $RESOURCE_GROUP \
-            --docker-image-name $ACR_LOGIN_SERVER/$IMAGE_NAME:${{ github.sha }}
+            --container-image-name $ACR_LOGIN_SERVER/$IMAGE_NAME:${{ github.sha }}
 
