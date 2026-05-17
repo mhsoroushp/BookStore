@@ -79,6 +79,9 @@ app.MapControllers();
 app.MapGroup("api").MapIdentityApi<User>();
 
 
+// ============================================
+// APPLY MIGRATIONS AUTOMATICALLY
+// ============================================
 if (app.Environment.IsProduction() || app.Environment.IsStaging())
 {
     using var scope = app.Services.CreateScope();
