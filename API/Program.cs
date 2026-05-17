@@ -24,7 +24,7 @@ builder.Services.AddControllers(opt =>
 builder.Services.AddTransient<ExceptionMiddleware>();
 builder.Services.AddDbContext<AppDbContext>(opt =>
 {
-    opt.UseSqlite(builder.Configuration.GetConnectionString("DefaultConnection"));
+    opt.UseSqlServer(builder.Configuration.GetConnectionString("DefaultConnection"));
 });
 
 builder.Services.AddScoped<DbInitializer>();
@@ -65,6 +65,15 @@ app.UseHttpsRedirection();
 
 app.UseAuthentication();
 app.UseAuthorization();
+
+// if (app.Environment.IsProduction())
+// {
+
+// }
+
+app.UseDefaultFiles();
+app.UseStaticFiles();
+app.MapFallbackToController("Index", "Fallback");
 
 app.MapControllers();
 app.MapGroup("api").MapIdentityApi<User>();

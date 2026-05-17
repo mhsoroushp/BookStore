@@ -20,6 +20,18 @@ public class ExceptionMiddleware(IHostEnvironment _env, ILogger<ExceptionMiddlew
         catch (Exception ex)
         {
             _logger.LogError(ex, "Unhandled exception");
+            if (_env.IsDevelopment())
+            {
+                context.Response.StatusCode = StatusCodes.Status500InternalServerError;
+                context.Response.ContentType = "application/json";
+
+                await context.Response.WriteAsJsonAsync(new
+                {
+                    message = ex.Message,
+                    stackTrace = ex.StackTrace
+                });
+                return;
+            }
             context.Response.StatusCode = StatusCodes.Status500InternalServerError;
             context.Response.ContentType = "application/json";
 

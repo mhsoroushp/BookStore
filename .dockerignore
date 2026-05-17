@@ -1,0 +1,41 @@
+# Git
+.git
+.gitignore
+.gitattributes
+
+# Build outputs
+bin/
+obj/
+dist/
+node_modules/
+.next/
+
+# IDEs
+.vscode/
+.idea/
+*.swp
+*.swo
+*.user
+*.suo
+.DS_Store
+
+# Node
+npm-debug.log
+yarn-error.log
+
+# Environment
+.env
+.env.local
+.env.*.local
+
+# Cache
+.npm
+.eslintcache
+*.lscache
+
+# Misc
+README.md
+.dockerignore
+Dockerfile
+docker-compose*.yml
+*.md

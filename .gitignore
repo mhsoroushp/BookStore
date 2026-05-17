@@ -484,3 +484,6 @@ $RECYCLE.BIN/
 *.swp
 API/bin*
 API/appsettings.json
+API/appsettings.Development.json
+
+*.lscache

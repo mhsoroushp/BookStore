@@ -5,7 +5,7 @@ import BookDashboard from "../../features/books/dashboard/BookDashboard";
 import LoginForm from "../../features/account/LoginForm";
 import RegisterForm from "../../features/account/RegisterForm";
 import AuthLayout from "../layout/AuthLayout/AuthLayout";
-import NotFound from "../../features/errors/notfound";
+import NotFound from "../../features/errors/NotFound";
 
 export const router = createBrowserRouter([
     {
